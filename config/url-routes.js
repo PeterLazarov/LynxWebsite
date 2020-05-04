@@ -3,5 +3,6 @@ export default {
     LOGIN: '/login',
     REGISTER: '/register',
     IMPORT: '/import',
-    REGIONS: '/regions',
+    CURRENT: '/current',
+    DAILY_DATA: '/dailyData',
 }

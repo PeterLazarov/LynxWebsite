@@ -6,6 +6,8 @@ export default {
     REGISTER: '/api/Account/Register',
     REGION: '/api/RegionCaseData',
     PROVINCE: '/api/ProvinceCaseData',
+    PROVINCE_DAY: '/api/ProvinceCaseDayData',
+    COMBINED_DAILY_CASE: '/api/CombinedDailyCase',
     CASE_UPDATE: '/api/CaseUpdate',
     PATIENT: '/api/Patient',
     IMPORT_PROVINCE_DATA: '/api/Import/ProvinceData',

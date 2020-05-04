@@ -130,6 +130,14 @@ input {
     max-width: 300px;
 }
 
+.heading {
+    color: white;
+    font-size: 25px;
+    display: block;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
 .select {
     display: block;
     width: 300px;

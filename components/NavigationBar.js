@@ -7,14 +7,14 @@ export default class NavigationBar extends Component {
     render() {
         const { activeRoute } = this.props
         let importLinkClass = `navigation-link ${activeRoute === urlRoutes.IMPORT ? 'active-link' :'' }`
-        let regionsLinkClass = `navigation-link ${activeRoute === urlRoutes.REGIONS ? 'active-link' :'' }`
+        let currentLinkClass = `navigation-link ${activeRoute === urlRoutes.CURRENT ? 'active-link' :'' }`
 
         return (
             <div className='navigation-bar'>
                 <Link href={urlRoutes.IMPORT}><a className={importLinkClass}>
                     {texts.dataImport}
                 </a></Link>
-                <Link href={urlRoutes.REGIONS}><a className={regionsLinkClass}>
+                <Link href={urlRoutes.CURRENT}><a className={currentLinkClass}>
                     {texts.dataRegions}
                 </a></Link>
                 

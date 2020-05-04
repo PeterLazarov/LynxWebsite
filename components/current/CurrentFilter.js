@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import texts from '../../config/texts';
 
-export default class RegionsFilter extends Component {
+export default class CurrentFilter extends Component {
     render() {
         const { props } = this;
         const { filter } = props;

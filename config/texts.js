@@ -9,8 +9,10 @@ export default {
     importType: 'Import Type',
     file: 'File',
     dataImport: 'Data Import',
-    dataRegions: 'Region Data',
+    dataRegions: 'Current Data',
     region: 'Region',
     province: 'Province',
-    logout: 'Logout'
+    logout: 'Logout',
+    provinces: 'Provinces',
+    dataProvinces: 'Past Data'
 }

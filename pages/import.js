@@ -1,20 +1,29 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import Papa from 'papaparse';
+import BlockUi from 'react-block-ui';
 import NavigationBar from '../components/NavigationBar';
 import ImportForm from '../components/import/ImportForm';
 import ImportType from '../components/import/ImportType';
-import ImportHeaderReplacements from '../components/import/ImportHeaderReplacements';
+import HeaderReplacements from '../components/import/HeaderReplacements';
+import SpecialHeaderReplacements from '../components/import/SpecialHeaderReplacements';
+import ImportBoolFields from '../components/import/ImportBoolFields';
 import urlRoutes from '../config/url-routes';
 import apiRoutes from '../config/api-routes';
 import http from '../utils/http';
 
 export default class ImportPage extends Component {
+    state = {
+        blocking: false,
+    };
     render() {
         return (
             <div className='page'>
                 <NavigationBar activeRoute={urlRoutes.IMPORT}/>
-                <ImportForm onImport={this.onImport.bind(this)} /> 
+                
+                <BlockUi tag="div" blocking={this.state.blocking}>
+                    <ImportForm onImport={this.onImport.bind(this)} /> 
+                </BlockUi>
             </div>
         );
     }
@@ -27,7 +36,7 @@ export default class ImportPage extends Component {
             reader.onload = function(e) { 
                 let contents = e.target.result;
 
-                let objects = that.parseCSVObjects.call(that, contents);
+                let objects = that.parseCSVObjects.call(that, contents, importType);
 
                 if (importType === ImportType.confirmed 
                     || importType === ImportType.deaths 
@@ -40,35 +49,57 @@ export default class ImportPage extends Component {
             }
             reader.readAsText(importFile);
         }
-        console.log(importFile);
     }
 
-    parseCSVObjects(content){
+    parseCSVObjects(content, importType){
         let result = Papa.parse(content, {
             header: true,
             dynamicTyping: true,
             transformHeader: header => {
-                let replacement = ImportHeaderReplacements[header];
+                let replacement = HeaderReplacements[header];
+                
                 if (replacement) {
                     header = replacement;
                 }
+                else if (SpecialHeaderReplacements.specialHeaders.indexOf(header) > -1){
+                    header = SpecialHeaderReplacements[importType][header];
+                }
+                
                 return header;
             },
+            transform: (value, header) => {
+                if (ImportBoolFields.indexOf(header) > -1) {
+                    value = !!value;
+                }
+                else if (header.toLowerCase() === 'id') {
+                    value = null;
+                }
+                else if (value && (header === 'AdminId' || header === 'ChronicDiseaseBinary')) {
+                    value = ': ' + value;
+                }
+                else if (header === 'Region' && value === 'Mainland China'){
+                    value = 'China'
+                }
+
+                return value;
+            }
         });
 
         return result.data;
     }
 
-    fixProvinceDailyData(provinceData, impoortType) {
+    fixProvinceDailyData(provinceData, importType) {
         let regex = /\d{1,2}\/\d{1,2}\/\d{2}/g;
         _.forIn(provinceData, (province) => {
-            provinceData.Status = impoortType;
-
             _.forOwn(province, (value, key) => {
                 if (regex.exec(key)) {
                     if (province.DailyData === undefined) province.DailyData = [];
 
-                    province.DailyData[key] = value;
+                    province.DailyData.push({
+                        day: key,
+                        cases: value,
+                        status: importType
+                    });
                     delete province[key];
                 }
                 regex.lastIndex = 0;
@@ -78,7 +109,7 @@ export default class ImportPage extends Component {
         return provinceData;
     }
 
-    performImport(objects, importType) {
+    async performImport(objects, importType) {
         let url = apiRoutes.IMPORT_PROVINCE_DATA;
 
         switch (importType) {
@@ -92,13 +123,13 @@ export default class ImportPage extends Component {
                 url = apiRoutes.IMPORT_CASE_UPDATE_DATA;
                 break;
         }
-        
-        http.request(url, {
+        this.setState({ blocking: true });
+        await http.request(url, {
             verb: 'POST',
             body: {
                 importData: objects,
-                // importType: importType
             }
-        })
+        });
+        this.setState({ blocking: false });
     }
 }

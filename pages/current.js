@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
-import RegionsGrid from '../components/regions/RegionsGrid';
-import RegionsFilter from '../components/regions/RegionsFilter';
+import CurrentGrid from '../components/current/CurrentGrid';
+import CurrentFilter from '../components/current/CurrentFilter';
 import NavigationBar from '../components/NavigationBar';
 import urlRoutes from '../config/url-routes';
 import apiRoutes from '../config/api-routes';
@@ -12,8 +12,13 @@ export default class RegionsPage extends Component {
     state = {
         regionData: [],
         filter: {
-            
+            province: '',
+            region: ''
         }
+    }
+    
+    static getInitialProps({query}) {
+        return {query}
     }
 
     async componentDidMount() {
@@ -25,14 +30,14 @@ export default class RegionsPage extends Component {
     render() {
         return (
             <div className='page'>
-                <NavigationBar activeRoute={urlRoutes.REGIONS} />
+                <NavigationBar activeRoute={urlRoutes.CURRENT} />
 
-                <RegionsFilter 
+                <CurrentFilter 
                     filter={this.state.filter} 
                     onFilterChange={this.onFilterChange.bind(this)}/>
 
                 {this.state.regionData.length > 0 &&
-                    <RegionsGrid regionData={this.state.regionData}/>}
+                    <CurrentGrid regionData={this.state.regionData}/>}
             </div>
         );
     }

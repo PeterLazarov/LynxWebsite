@@ -2,7 +2,7 @@ module.exports = {
     'Country/Region': 'Region',
     'Province/State': 'Province',
     'symptom': 'Symptoms',
-    'death': 'Dead',
+    'death': 'IsDead',
     'from Wuhan': 'FromWuhan',
     'visiting Wuhan': 'VisitedWuhan',
     'exposure_end': 'ExposureEnd',
