@@ -68,8 +68,8 @@ export default class ImportPage extends Component {
                 return header;
             },
             transform: (value, header) => {
-                if (ImportBoolFields.indexOf(header) > -1) {
-                    value = !!value;
+                if (ImportBoolFields.indexOf(header) > -1) {                    
+                    value = !!Number(value);
                 }
                 else if (header.toLowerCase() === 'id') {
                     value = null;
@@ -78,7 +78,10 @@ export default class ImportPage extends Component {
                     value = ': ' + value;
                 }
                 else if (header === 'Region' && value === 'Mainland China'){
-                    value = 'China'
+                    value = 'China';
+                }
+                else if (value === 'NA') {
+                    value = null;
                 }
 
                 return value;

@@ -14,5 +14,9 @@ export default {
     province: 'Province',
     logout: 'Logout',
     provinces: 'Provinces',
-    dataProvinces: 'Past Data'
+    dataProvinces: 'Past Data',
+    details: 'Details',
+    caseUpdates: 'Case Updates',
+    yes: 'yes',
+    no: 'no',
 }

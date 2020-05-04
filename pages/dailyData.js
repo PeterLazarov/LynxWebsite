@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import DailyDataGrid from '../components/dailyData/DailyDataGrid';
+import CaseUpdatesGrid from '../components/dailyData/CaseUpdatesGrid';
 import NavigationBar from '../components/NavigationBar';
 import urlRoutes from '../config/url-routes';
 import apiRoutes from '../config/api-routes';
+import texts from '../config/texts';
 import http from '../utils/http';
 import helper from '../utils/helper';
 
@@ -11,6 +13,7 @@ export default class ProvincesPage extends Component {
     state = {
         province: null,
         dailyCaseData: [],
+        caseUpdates: []
     }
 
     static getInitialProps({query}) {
@@ -21,12 +24,14 @@ export default class ProvincesPage extends Component {
         if (this.props.query && (this.props.query.region || this.props.query.province)) {
             let province = await this.loadProvince(this.props.query);
             let dailyCaseData = [];
+            let caseUpdates = [];
 
             if (province) {
-                dailyCaseData = await this.loadDailyCaseData(province);
+                // dailyCaseData = await this.loadDailyCaseData(province);
+                caseUpdates = await this.loadCaseUpdates(province);
             }
             
-            this.setState({ province, dailyCaseData });
+            this.setState({ province, dailyCaseData, caseUpdates });
         }
     }
 
@@ -47,10 +52,16 @@ export default class ProvincesPage extends Component {
                 <NavigationBar />
 
                 {state.province &&
-                    <label className="heading centered">{heading} - Details</label>}
+                    <label className="heading centered">{heading} - {texts.details}</label>}
 
                 {state.dailyCaseData.length > 0 &&
                     <DailyDataGrid dailyCaseData={state.dailyCaseData}/>}
+
+                {state.province && state.caseUpdates.length > 0 &&
+                    <label className="heading centered">{texts.caseUpdates}</label>}
+
+                {state.caseUpdates.length > 0 &&
+                    <CaseUpdatesGrid caseUpdates={state.caseUpdates}/>}
             </div>
         );
     }
@@ -73,13 +84,13 @@ export default class ProvincesPage extends Component {
         return !_.isEmpty(result.data) ? result.data : [];
     }
 
-    async onFilterChange(newFilter) {
-        this.setState({
-            filter: newFilter
+    async loadCaseUpdates(province) {
+        const query = helper.objectToQuery({
+            country: province.region,
+            location: province.province,
         });
+        const result = await http.request(`${apiRoutes.CASE_UPDATE}${query}`);
 
-        let data = await this.loadProvinceData(newFilter);
-
-        this.setState({ provinceData: data });
+        return !_.isEmpty(result.data) ? result.data : [];
     }
 }

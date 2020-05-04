@@ -19,7 +19,7 @@ export default class CurrentGrid extends Component {
                 height={300}
                 rowCount={regionData.length + 1}
                 rowHeight={30}
-                width={938}/>
+                width={950}/>
         );
     }
 
