@@ -8,15 +8,22 @@ export default class RegisterForm extends Component {
         username: '',
         password: '',
         repeatPassword: '',
-        usernameError: false,
-        passwordError: false,
-        repeatPasswordError: false,
-        differentPasswordsError: false
+        errors: []
     }
 
     render() {
         return (
             <div className='form centered'>
+                {(this.state.errors.length > 0 || this.props.errors.length > 0) &&
+                    <div className="error-panel">
+                        {this.state.errors.map((error, index) => 
+                            <label className="error-line" key={index}>{error} </label>
+                        )}
+                        {this.props.errors.map((error, index) => 
+                            <label className="error-line" key={index}>{error} </label>
+                        )}
+                    </div>
+                }
                 <div className="form-row">
                     <input 
                         type='text' 
@@ -53,25 +60,38 @@ export default class RegisterForm extends Component {
     }
 
     isValid() {
-        return !_.isNull(this.state.password) && !_.isNull(this.state.repeatPassword) 
-            && !_.isNull(this.state.username) && this.state.password === this.state.repeatPassword;
+        return !_.isEmpty(this.state.password) && !_.isEmpty(this.state.repeatPassword) 
+            && !_.isEmpty(this.state.username) && this.state.password === this.state.repeatPassword;
     }
 
     onTryRegister() {
         const { state } = this;
-        if (this.isValid()) {
+        
+        if (this.isValid()) {            
+            this.setState({ errors: [] });
+
             this.props.onRegister({
                 username: state.username,
                 password: state.password
             });
         }
         else {
-            this.setState({
-                usernameError: _.isNull(state.username),
-                passwordError: _.isNull(state.password),
-                repeatPasswordError: _.isNull(state.repeatPassword),
-                differentPasswordsError: state.password === state.repeatPassword
-            });
+            let errors = [];
+
+            if (_.isEmpty(state.username)) {
+                errors.push(texts.usernameIsRequired)
+            }
+            if (_.isEmpty(state.password)) {
+                errors.push(texts.passwordIsRequired)
+            }
+            if (_.isEmpty(state.repeatPassword)) {
+                errors.push(texts.pleaseRepeatPassword)
+            }
+            if (state.password !== state.repeatPassword) {
+                errors.push(texts.passwordsDontMatch)
+            }
+
+            this.setState({ errors });
         }
     }
 }

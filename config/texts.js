@@ -20,4 +20,9 @@ export default {
     patients: 'Patients',
     yes: 'yes',
     no: 'no',
+    usernameOrPasswordIncorrect: 'The Username or Password are incorrect. Please try again.',
+    usernameIsRequired: 'Username is required.',
+    passwordIsRequired: 'Password is required.',
+    pleaseRepeatPassword: 'Please repeat the password.',
+    passwordsDontMatch: 'The entered passwords don`t match.',
 }

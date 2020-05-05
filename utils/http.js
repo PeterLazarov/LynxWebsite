@@ -31,7 +31,7 @@ export default {
         } catch (error) {
             console.log(error);
         }
-
+        
         return {
             isNotValid: response.status === 400,
             isNotFound: response.status === 404,

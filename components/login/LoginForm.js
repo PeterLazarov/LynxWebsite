@@ -7,13 +7,22 @@ export default class LoginForm extends Component {
     state = {
         username: '',
         password: '',
-        usernameError: false,
-        passwordError: false
+        errors: []
     }
 
     render() {
         return (
             <div className='form centered'>
+                {(this.state.errors.length > 0 || this.props.errors.length > 0) &&
+                    <div className="error-panel">
+                        {this.state.errors.map((error, index) => 
+                            <label className="error-line" key={index}>{error} </label>
+                        )}
+                        {this.props.errors.map((error, index) => 
+                            <label className="error-line" key={index}>{error} </label>
+                        )}
+                    </div>
+                }
                 <div className="form-row">
                     <input 
                         type='text' 
@@ -43,21 +52,31 @@ export default class LoginForm extends Component {
     }
 
     isValid() {
-        return !_.isNull(this.state.password) && !_.isNull(this.state.username);
+        return !_.isEmpty(this.state.password) && !_.isEmpty(this.state.username);
     }
 
     onTryLogin() {
+        const { state } = this;
+
         if (this.isValid()) {
+            this.setState({ errors: [] });
+
             this.props.onLogin({
-                username: this.state.username,
-                password: this.state.password
+                username: state.username,
+                password: state.password
             });
         }
         else {
-            this.setState({
-                usernameError: _.isNull(this.state.username),
-                passwordError: _.isNull(this.state.password)
-            });
+            let errors = [];
+
+            if (_.isEmpty(state.username)) {
+                errors.push(texts.usernameIsRequired)
+            }
+            if (_.isEmpty(state.password)) {
+                errors.push(texts.passwordIsRequired)
+            }
+
+            this.setState({ errors });
         }
     }
 }

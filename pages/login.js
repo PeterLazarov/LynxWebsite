@@ -3,17 +3,20 @@ import Router from 'next/router';
 import LoginForm from '../components/login/LoginForm';
 import urlRoutes from '../config/url-routes';
 import apiRoutes from '../config/api-routes';
+import texts from '../config/texts';
 import http from '../utils/http';
 
 export default class LoginPage extends Component {
     state = {
-        errorMessage: '',
+        errors: []
     }
 
     render() {
         return (
             <div className='page'>
-               <LoginForm onLogin={this.onLogin.bind(this)} /> 
+               <LoginForm 
+                    errors={this.state.errors} 
+                    onLogin={this.onLogin.bind(this)} /> 
             </div>
         );
     }
@@ -30,6 +33,12 @@ export default class LoginPage extends Component {
 
         if (result.isOkay){
             Router.push(urlRoutes.IMPORT);
+        }
+        else {
+            let errors = [];
+            errors.push(texts.usernameOrPasswordIncorrect)
+
+            this.setState({ errors });
         }
     }
 }

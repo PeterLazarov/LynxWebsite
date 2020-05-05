@@ -6,6 +6,9 @@ body {
     width: 100vw;
     height: 100vh;
     background-color: #40E0D0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .content-container {
@@ -138,6 +141,11 @@ input {
     overflow: hidden;
     display: block;
     max-width: 300px;
+}
+
+.error-line {
+    display: block;
+    color: red;
 }
 
 .heading {
