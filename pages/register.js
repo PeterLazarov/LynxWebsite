@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import { Router } from 'next/router';
+import Router from 'next/router';
 import RegisterForm from '../components/register/RegisterForm';
 import urlRoutes from '../config/url-routes';
 import apiRoutes from '../config/api-routes';
