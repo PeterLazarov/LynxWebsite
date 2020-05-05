@@ -21,9 +21,11 @@ export default class ImportPage extends Component {
             <div className='page'>
                 <NavigationBar activeRoute={urlRoutes.IMPORT}/>
                 
+                <div className="content-container">
                 <BlockUi tag="div" blocking={this.state.blocking}>
                     <ImportForm onImport={this.onImport.bind(this)} /> 
                 </BlockUi>
+                </div>
             </div>
         );
     }
@@ -54,7 +56,6 @@ export default class ImportPage extends Component {
     parseCSVObjects(content, importType){
         let result = Papa.parse(content, {
             header: true,
-            dynamicTyping: true,
             transformHeader: header => {
                 let replacement = HeaderReplacements[header];
                 
@@ -74,14 +75,8 @@ export default class ImportPage extends Component {
                 else if (header.toLowerCase() === 'id') {
                     value = null;
                 }
-                else if (value && (header === 'AdminId' || header === 'ChronicDiseaseBinary')) {
-                    value = ': ' + value;
-                }
                 else if (header === 'Region' && value === 'Mainland China'){
                     value = 'China';
-                }
-                else if (value === 'NA') {
-                    value = null;
                 }
 
                 return value;

@@ -17,6 +17,7 @@ export default {
     dataProvinces: 'Past Data',
     details: 'Details',
     caseUpdates: 'Case Updates',
+    patients: 'Patients',
     yes: 'yes',
     no: 'no',
 }

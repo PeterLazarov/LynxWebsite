@@ -32,12 +32,14 @@ export default class RegionsPage extends Component {
             <div className='page'>
                 <NavigationBar activeRoute={urlRoutes.CURRENT} />
 
-                <CurrentFilter 
-                    filter={this.state.filter} 
-                    onFilterChange={this.onFilterChange.bind(this)}/>
+                <div className="content-container">
+                    <CurrentFilter 
+                        filter={this.state.filter} 
+                        onFilterChange={this.onFilterChange.bind(this)}/>
 
-                {this.state.regionData.length > 0 &&
-                    <CurrentGrid regionData={this.state.regionData}/>}
+                    {this.state.regionData.length > 0 &&
+                        <CurrentGrid regionData={this.state.regionData}/>}
+                </div>
             </div>
         );
     }

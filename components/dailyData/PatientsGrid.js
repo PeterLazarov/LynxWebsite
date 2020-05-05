@@ -6,11 +6,11 @@ import { FaArrowRight } from 'react-icons/fa';
 import urlRoutes from '../../config/url-routes';
 import texts from '../../config/texts';
 
-export default class CaseUpdatesGrid extends Component {
-    columnWidths = [110, 100, 110, 120, 110, 100, 100, 50, 70, 150, 100, 90, 80, 110, 250, 800, 200, 200]
+export default class PatientsGrid extends Component {
+    columnWidths = [120, 120, 100, 100, 120, 150, 60, 60, 150, 110, 110, 150, 160, 125, 150, 150, 100, 80, 100, 110, 150, 150, 100, 100, 180, 130, 150, 150]
 
     render() {
-        const { caseUpdates } = this.props
+        const { patients } = this.props
         let containerWidth = document.getElementsByClassName('content-container')[0].clientWidth;
 
         return (
@@ -22,7 +22,7 @@ export default class CaseUpdatesGrid extends Component {
                         columnCount={this.columnWidths.length}
                         columnWidth={this.getColumnWidths.bind(this)}
                         height={600}
-                        rowCount={caseUpdates.length + 1}
+                        rowCount={patients.length + 1}
                         rowHeight={30}
                         width={width || containerWidth}/>}
             </ReactResizeDetector>
@@ -34,12 +34,11 @@ export default class CaseUpdatesGrid extends Component {
     }
 
     cellRenderer({columnIndex, key, rowIndex, style}) {
-        let caseUpdates = this.props.caseUpdates;
+        let patients = this.props.patients;
         let value = '';
         let cellClass = '';
-        let keys = Object.keys(caseUpdates[0]);
+        let keys = Object.keys(patients[0]);
         let isHeader = rowIndex === 0;
-        let isLastColumn = columnIndex === (this.columnWidths.length - 1);
         
         if (isHeader) {
             let property = keys[columnIndex + 1];
@@ -48,7 +47,7 @@ export default class CaseUpdatesGrid extends Component {
             value = property;
         }
         else {
-            let caseUpdate = caseUpdates[rowIndex - 1];
+            let caseUpdate = patients[rowIndex - 1];
             let property = Object.keys(caseUpdate)[columnIndex + 1];
 
             cellClass = 'data-cell';
@@ -60,10 +59,7 @@ export default class CaseUpdatesGrid extends Component {
         
         return (
           <div key={key} style={style} className={cellClass}>
-                {(isHeader || !isLastColumn) &&
-                    <label title={value}>{value}</label> }
-                {!isHeader && isLastColumn &&
-                    <a title={value} href={value}>{value}</a> }
+                <label title={value}>{value}</label> 
           </div>
         );
     }

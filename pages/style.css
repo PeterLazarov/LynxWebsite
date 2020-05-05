@@ -6,9 +6,19 @@ body {
     width: 100vw;
     height: 100vh;
     background-color: #40E0D0;
+}
+
+.content-container {
+    background-color: #40E0D0;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: absolute;
+    top: 44px;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 .form {
@@ -134,6 +144,7 @@ input {
     color: white;
     font-size: 25px;
     display: block;
+    margin-top: 20px;
     margin-bottom: 20px;
     font-weight: bold;
 }
@@ -166,6 +177,7 @@ input {
 .data-grid {
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 4px;
+    min-height: 200px;
 }
 
     .data-grid .header-cell {
