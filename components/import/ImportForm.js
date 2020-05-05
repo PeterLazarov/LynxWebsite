@@ -41,7 +41,6 @@ export default class RegisterForm extends Component {
                         type='file' 
                         name="csvImport" id="csvImport" 
                         className="csv-import-input"
-                        // onInput={(e) => this.setState({file: (e.target.value)})}
                         onInput={(e) => {
                             let file = e.target.files[0];
                             this.setState({
@@ -53,6 +52,7 @@ export default class RegisterForm extends Component {
                     <input 
                         type='button' 
                         value={texts.import} 
+                        disabled={!this.state.file}
                         className='button half-width right-float' 
                         onClick={this.onTryImport.bind(this)}/>
                 </div>
