@@ -31,6 +31,7 @@ export default class LoginPage extends Component {
             }
         })
 
+        debugger;
         if (result.isOkay){
             Router.push(urlRoutes.IMPORT);
         }

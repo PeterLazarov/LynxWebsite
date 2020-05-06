@@ -4,6 +4,8 @@ export default {
     ADDRESS: `${envConfig.api.address}:${envConfig.api.port}`,
     LOGIN: '/api/Account/Login',
     REGISTER: '/api/Account/Register',
+    IS_SIGNED_IN: '/api/Account/IsSignedIn', 
+    SIGN_OUT: '/api/Account/SignOut', 
     REGION: '/api/RegionCaseData',
     PROVINCE: '/api/ProvinceCaseData',
     PROVINCE_DAY: '/api/ProvinceCaseDayData',

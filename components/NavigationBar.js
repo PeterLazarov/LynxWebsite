@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
 import urlRoutes from '../config/url-routes';
+import apiRoutes from '../config/api-routes';
 import texts from '../config/texts';
+import http from '../utils/http';
 
 export default class NavigationBar extends Component {
     render() {
@@ -18,10 +20,16 @@ export default class NavigationBar extends Component {
                     {texts.dataRegions}
                 </a></Link>
                 
-                <Link href={urlRoutes.HOME}><a className='navigation-link logout-link'>
+                <Link href={urlRoutes.HOME}><a className='navigation-link logout-link' 
+                    onClick={this.onLogout}>
                     {texts.logout}
                 </a></Link>
             </div>
         );
+    }
+
+    async onLogout(loginUser)
+    {
+        await http.request(apiRoutes.SIGN_OUT)
     }
 }

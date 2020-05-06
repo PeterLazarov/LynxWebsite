@@ -16,6 +16,12 @@ export default class ImportPage extends Component {
     state = {
         blocking: false,
     };
+
+    async componentDidMount() {
+        var isSignedIn = await http.request(apiRoutes.IS_SIGNED_IN);
+        debugger;
+    }
+
     render() {
         return (
             <div className='page'>

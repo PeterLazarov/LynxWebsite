@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import Link from 'next/link';
 import { Grid } from 'react-virtualized';
 import { FaArrowRight } from 'react-icons/fa';
@@ -50,6 +51,10 @@ export default class CurrentGrid extends Component {
 
             cellClass = 'data-cell';
             value = currentData[property];
+
+            if (!isNaN(value)){
+                value = Number(value);
+            }
         }
         
         return (
