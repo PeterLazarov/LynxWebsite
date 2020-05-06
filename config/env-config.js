@@ -7,6 +7,6 @@ export default {
         // address: process.env.REACT_APP_API_ADDRESS,
         // port: process.env.REACT_APP_API_PORT
         address: 'https://localhost',
-        port: 5001
+        port: 8081
     },
 }
