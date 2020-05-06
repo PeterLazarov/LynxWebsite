@@ -15,9 +15,9 @@ export default {
             response = await fetch(`${apiRoutes.ADDRESS}${url}`, {
                 method: verb,
                 protocol: 'http',
-                credentials: 'same-origin',
                 headers: new Headers({
                     'content-type': 'application/json',
+                    'cache-control': 'no-cache'
                 }),
                 body: body ? JSON.stringify(body) : null
             });
