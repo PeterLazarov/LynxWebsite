@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "dotenv": "^8.2.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "next": "9.3.6",
     "papaparse": "^5.2.0",
     "react": "16.13.1",
